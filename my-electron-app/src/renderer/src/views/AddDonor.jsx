@@ -1,10 +1,18 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const API_URL = 'http://localhost:5054/api/donors';
-const API_TOKEN = 'MI_SECRETO_API_TOKEN'; // tu token real
 
 export default function AddDonor() {
   const [form, setForm] = useState({ name: '', age: '', bloodType: '' });
+  const [token, setToken] = useState('');
+
+  // Cargar token desde localStorage al montar el componente
+  useEffect(() => {
+    const tokenGuardado = localStorage.getItem('apiToken');
+    if (tokenGuardado) {
+      setToken(tokenGuardado);
+    }
+  }, []);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -12,12 +20,17 @@ export default function AddDonor() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!token) {
+      return alert('No hay token disponible. Ingresa nuevamente.');
+    }
+
     try {
       const res = await fetch(API_URL, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': `Bearer ${API_TOKEN}`
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify({ name: form.name, age: Number(form.age), bloodType: form.bloodType })
       });
@@ -36,9 +49,30 @@ export default function AddDonor() {
     <div style={{ maxWidth: '400px', margin: '2rem auto' }}>
       <h2>Agregar Donante</h2>
       <form onSubmit={handleSubmit}>
-        <input type="text" name="name" placeholder="Nombre" value={form.name} onChange={handleChange} required />
-        <input type="number" name="age" placeholder="Edad" value={form.age} onChange={handleChange} required min={0} max={120} />
-        <select name="bloodType" value={form.bloodType} onChange={handleChange} required>
+        <input
+          type="text"
+          name="name"
+          placeholder="Nombre"
+          value={form.name}
+          onChange={handleChange}
+          required
+        />
+        <input
+          type="number"
+          name="age"
+          placeholder="Edad"
+          value={form.age}
+          onChange={handleChange}
+          required
+          min={0}
+          max={120}
+        />
+        <select
+          name="bloodType"
+          value={form.bloodType}
+          onChange={handleChange}
+          required
+        >
           <option value="">Tipo de Sangre</option>
           <option value="A+">A+</option>
           <option value="A-">A-</option>

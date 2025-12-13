@@ -1,7 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const API_URL = 'http://localhost:5054/api/donors';
-const API_TOKEN = 'MI_SECRETO_API_TOKEN';
 
 function DonorCard({ donor }) {
   return (
@@ -18,6 +17,15 @@ export default function SearchByBlood() {
   const [bloodType, setBloodType] = useState('');
   const [donors, setDonors] = useState([]);
   const [error, setError] = useState('');
+  const [token, setToken] = useState('');
+
+  // Cargar token desde localStorage al montar el componente
+  useEffect(() => {
+    const tokenGuardado = localStorage.getItem('apiToken');
+    if (tokenGuardado) {
+      setToken(tokenGuardado);
+    }
+  }, []);
 
   const handleSearch = async () => {
     setDonors([]);
@@ -28,10 +36,15 @@ export default function SearchByBlood() {
       return;
     }
 
+    if (!token) {
+      alert('No hay token disponible. Ingresa nuevamente.');
+      return;
+    }
+
     try {
       const response = await fetch(`${API_URL}?bloodType=${encodeURIComponent(bloodType)}`, {
         headers: {
-          'Authorization': `Bearer ${API_TOKEN}`,
+          'Authorization': `Bearer ${token}`,
           'Accept': 'application/json'
         }
       });
