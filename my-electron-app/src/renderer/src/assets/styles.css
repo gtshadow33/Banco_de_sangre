@@ -1,0 +1,96 @@
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f0f3f7;
+  margin: 0;
+  padding: 0;
+}
+
+nav {
+  background-color: #b30021; 
+  padding: 16px 24px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  display: flex;
+  gap: 16px; 
+}
+
+nav a {
+  color: #fff;
+  text-decoration: none;
+  font-weight: bold;
+  padding: 10px 16px;
+  border-radius: 30px;
+  background: rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+  font-size: 15px;
+}
+
+nav a:hover {
+  background: #fff;
+  color: #b30021;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+}
+
+nav a:active {
+  transform: scale(0.96);
+}
+
+/* ========= CONTENEDORES ========= */
+.container {
+  max-width: 650px;
+  margin: 25px auto;
+  padding: 25px;
+  background: white;
+  border-radius: 12px;
+  border-top: 6px solid #b30021;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.12);
+}
+
+/* ========= BOTONES ========= */
+button {
+  background-color: #b30021;
+  color: white;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s ease;
+}
+
+button:hover {
+  background-color: #8d001b;
+}
+
+/* ========= INPUTS Y SELECTS ========= */
+input, select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  box-sizing: border-box;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+}
+
+/* ========= TARJETAS DE DONANTES ========= */
+.donor-card {
+  border: 1px solid #e0e0e0;
+  border-left: 6px solid #b30021; 
+  border-radius: 8px;
+  padding: 12px;
+  margin: 12px 0;
+  background: #fff7f7;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+
+.donor-card h3 {
+  margin: 0 0 5px;
+  color: #b30021;
+}
+
+.donor-card p {
+  margin: 3px 0;
+  font-size: 14px;
+  color: #444;
+}
