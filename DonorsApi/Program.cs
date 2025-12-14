@@ -11,7 +11,11 @@ builder.Services.AddDbContext<DonorContext>(options =>
 // --- Controladores ---
 builder.Services.AddControllers();
 
-// --- CORS: permitir cualquier origen (para desarrollo) ---
+// --- Swagger (simple) ---
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
+// --- CORS ---
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowAll", policy =>
@@ -22,7 +26,7 @@ builder.Services.AddCors(options =>
     });
 });
 
-// --- Autenticación con token simple ---
+// --- Autenticación con token ---
 builder.Services.AddAuthentication("ApiToken")
     .AddScheme<AuthenticationSchemeOptions, TokenAuthHandler>("ApiToken", null);
 
@@ -31,7 +35,14 @@ builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// --- Usar CORS ANTES de Auth ---
+// --- Swagger ---
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
+
+// --- Middleware ---
 app.UseCors("AllowAll");
 
 app.UseAuthentication();
